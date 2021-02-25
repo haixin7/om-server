@@ -1,0 +1,98 @@
+{
+  "name": "om-server",
+  "version": "0.0.0",
+  "private": true,
+  "engines": {
+    "node": "12.x",
+    "npm": "6.x"
+  },
+  "scripts": {
+    "dev-build": "npm-run-all clean transpile",
+    "start": "node dist-server/bin/www",
+    "dev": "cross-env NODE_ENV=development npm-run-all dev-build start",
+    "transpile": "babel ./server --out-dir dist-server",
+    "clean": "rimraf dist-server",
+    "watch": "nodemon --scripts-prepend-node-path",
+    "lint": "eslint ./server/**/*.js --no-ignore",
+    "lint:watch": "esw --watch --fix ./server/**/*.js --no-ignore",
+    "dev-pre-git": "npm run lint && rm -rf ./dist-server",
+    "pre-workout": "npm install && npm clean-install",
+    "test": "npm-run-all lint build"
+  },
+  "dependencies": {
+    "@babel/preset-env": "^7.8.7",
+    "@sendgrid/mail": "^7.1.0",
+    "aws-sdk": "^2.703.0",
+    "axios": "^0.21.1",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-loader": "^8.0.0-beta.6",
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.2",
+    "eslint-config-standard": "^14.1.1",
+    "express": "~4.16.1",
+    "express-jwt": "^5.3.1",
+    "figlet": "^1.3.0",
+    "fs": "0.0.1-security",
+    "http-errors": "~1.6.3",
+    "jsonwebtoken": "^8.5.1",
+    "lint": "^0.7.0",
+    "mongoose": "^5.9.3",
+    "morgan": "~1.9.1",
+    "multer": "^1.4.2",
+    "multer-s3": "^2.9.0",
+    "npm-run-all": "^4.1.5",
+    "redis": "^3.0.2",
+    "rimraf": "^3.0.2",
+    "sendgrid": "^5.2.3",
+    "socket.io": "^2.4.1",
+    "stripe": "^8.68.0",
+    "test": "^0.6.0",
+    "twilio": "^3.57.0",
+    "uuid": "^7.0.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run dev-pre-git",
+      "pre-push": "npm run dev-pre-git"
+    }
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.13.0",
+    "@babel/core": "^7.10.4",
+    "babel-preset-es2015": "^6.24.1",
+    "cross-env": "^7.0.2",
+    "eslint": "^6.8.0",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-watch": "^6.0.1",
+    "husky": "^4.2.3",
+    "nodemon": "^2.0.2"
+  },
+  "nodemonConfig": {
+    "exec": "npm run dev",
+    "watch": [
+      "server/*",
+      "public/*"
+    ],
+    "ignore": [
+      "**/__tests__/**",
+      "*.test.js",
+      "*.spec.js"
+    ]
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "esmodules": true
+          }
+        }
+      ]
+    ]
+  }
+}
